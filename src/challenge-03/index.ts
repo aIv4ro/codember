@@ -3,21 +3,14 @@ import path from 'node:path'
 
 const data = fs.readFileSync(path.resolve('./src/challenge-03/data.txt')).toString()
 const inputs = data.split('\r\n')
-const invalidInputs = []
 
-for (const input of inputs) {
-  const [policy, password] = input.split(': ')
-  const [times, letter] = policy.split(' ')
-  const [min, max] = times.split('-').map(num => Number(num))
-  let counter = 0
-  for (const char of password) {
-    if (char === letter) {
-      counter++
-    }
-  }
-  if (counter < min || counter > max) {
-    invalidInputs.push(password)
-  }
-}
+const regex = /(\d+)-(\d+) (\w): (\w+)/
+const invalidInputsRegex = inputs.filter(input => {
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion, @typescript-eslint/no-unused-vars
+  const [_, min, max, letter, password] = input.match(regex)!
+  const counterRegex = new RegExp(letter, 'g')
+  const counter = password.match(counterRegex)?.length ?? 0
+  return counter < Number(min) || counter > Number(max)
+})
 
-console.log(invalidInputs[12])
+console.log(invalidInputsRegex[41])
