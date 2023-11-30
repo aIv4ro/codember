@@ -8,7 +8,7 @@
     "tsc": "tsc",
     "build": "npm run tsc",
     "start": "npm run build && node ./build/index.js",
-    "dev": "tsnd --clear --respawn ./src/challenge-04/index.ts"
+    "dev": "tsnd --clear --respawn ./src/challenge-05/index.ts"
   },
   "author": "Alvaro",
   "license": "ISC",
